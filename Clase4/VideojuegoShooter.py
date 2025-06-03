@@ -30,14 +30,14 @@ def puntos_ganados(tipo_enemigo):
     else:
         return 0
 
-def recargar_arma(arma_actual, arma_nueva=None):
+def recargar_arma(arma_actual):
     max_balas = {'pistola': 10, 'escopeta': 6, 'sniper': 5}
     nombre_arma = arma_actual[0]
     arma_actual[1] = max_balas.get(nombre_arma, 5)
     print(f"Arma {nombre_arma} recargada. Balas disponibles: {arma_actual[1]}")
     return arma_actual
 
-def cambiar_arma(arma_actual, arma_nueva=None):
+def cambiar_arma(arma_actual):
     print(" Elige  un arma: 1.pistola, 2.escopeta, 3.sniper")
     eleccion = input("opcion: ")
     if eleccion == '1':
@@ -70,16 +70,29 @@ def elegir_enemigo():
         print("Enemigo no válido, se usará zombi por defecto.")
         return 'zombi', 60
 
+def elegir_arma_inicial():
+    print("Elige tu arma inicial: 1.pistola, 2.escopeta, 3.sniper")
+    eleccion = input("opcion: ")
+    if eleccion == '1':
+        return ['pistola', 10, 0.8]
+    elif eleccion == '2':
+        return ['escopeta', 6, 0.6]
+    elif eleccion == '3':
+        return ['sniper', 5, 0.9]
+    else:
+        print("Opción no válida, se usará pistola por defecto.")
+        return ['pistola', 10, 0.8]
+
 def principal():
-    arma_actual_usuario = ['pistola', 5, 0.7]
+    arma_actual_usuario = elegir_arma_inicial()
     vida_usuario = 100
     tipo_enemigo, vida_enemigo = elegir_enemigo()
     puntos = 0
 
     while True:
         print(f"\nTu vida: {vida_usuario} | Vida enemigo: {vida_enemigo}")
-        print(f"Tu arma: {arma_actual_usuario[0].capitalize()} | Balas: {arma_actual_usuario[1]}")
-        print(f"Enemigo: {tipo_enemigo.capitalize()}")
+        print(f"Tu arma: {arma_actual_usuario[0]} | Balas: {arma_actual_usuario[1]}")
+        print(f"Enemigo: {tipo_enemigo}")
         opcion = input("1. Disparar\n2. Recargar arma\n3. Cambiar arma\n4. Cambiar enemigo\n5. Salir\n:")
         if opcion == '1':
             if arma_actual_usuario[1] > 0:
